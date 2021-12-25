@@ -1,13 +1,27 @@
 import './sass/main.scss';
-import { pixabayResult } from './gallery-items.js';
 
-const galleryItems = pixabayResult.hits;
-console.log(galleryItems)
-
-const galleryContainer = document.querySelector('.gallery');
-const galleryMarkup = createGalleryCardMarkup(galleryItems);
-
-galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
+const axios = require('axios');
+axios.get('https://pixabay.com/api/', {
+   params:{
+    key: '24932126-e4a09320761fab059b52dba3b',
+    per_page: 40,
+    page: 1
+    }
+  })
+  .then(function (response) {
+    // handle success
+    const galleryItems = response.data.hits;
+    const galleryMarkup = createGalleryCardMarkup(galleryItems);
+    const galleryContainer = document.querySelector('.gallery');
+    galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });
 
 function createGalleryCardMarkup(galleryItems) {
   return galleryItems.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
