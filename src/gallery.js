@@ -6,12 +6,12 @@ export class Gallery {
   static KEY = '24932126-e4a09320761fab059b52dba3b';
   static PER_PAGE = 40;
 
-  constructor(a, b) {
+  constructor(galleryElement, loadMoreElement) {
     this.page = 1;
     this.hitsCount = 0;
     this.searchTerm = '';
-    this.galleryContainer = document.querySelector(a);
-    this.loadMoreButton = document.querySelector(b);
+    this.galleryContainer = document.querySelector(galleryElement);
+    this.loadMoreButton = document.querySelector(loadMoreElement);
 
     this.loadMoreButton.addEventListener('click', (event) => {
       this.loadMore();
