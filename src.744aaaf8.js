@@ -71,4 +71,4 @@ module.exports=require("./lib/axios");
 },{"notiflix":"hWOm","axios":"dZBD"}],"Focm":[function(require,module,exports) {
 "use strict";require("./sass/main.scss");var e=require("./gallery");let r=new e.Gallery(".gallery","#load-btn"),s=document.querySelector("#search-form");s.addEventListener("submit",e=>{e.preventDefault();const s=e.target.elements.searchQuery.value;r.search(s)});
 },{"./sass/main.scss":"clu1","./gallery":"Ef3P"}]},{},["Focm"], null)
-//# sourceMappingURL=/intellias-js-hw-11/src.189f7e6c.js.map
+//# sourceMappingURL=/intellias-js-hw-11/src.744aaaf8.js.map
