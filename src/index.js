@@ -6,6 +6,8 @@ let gallery = new Gallery('.gallery', '#load-btn');
 let formSearch = document.querySelector('#search-form');
 formSearch.addEventListener('submit', (event) => {
   event.preventDefault();
-  const searchInputValue = event.target.elements.searchQuery.value;
-  gallery.search(searchInputValue);
+  const searchInputValue = event.target.elements.searchQuery.value.trim();
+  if (searchInputValue !== '') {
+    gallery.search(searchInputValue);
+  }
 })

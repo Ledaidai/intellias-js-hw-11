@@ -21,7 +21,8 @@ export class Gallery {
   async loadMore() {
     this.page += 1;
     const result = await this.getImages();
-    this.renderResults(result)
+    this.checkResult(result)
+    this.renderResults(result.data.hits)
   }
 
   async search(q) {
@@ -30,7 +31,23 @@ export class Gallery {
     this.page = 1;
     this.searchTerm = q;
     const result = await this.getImages();
-    this.renderResults(result)
+    this.checkResult(result)
+    this.renderResults(result.data.hits)
+  }
+
+  checkResult(result) {
+    if (result.data.totalHits === 0) {
+      Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+      this.loadMoreButton.classList.remove('visible');
+      return;
+    }
+    this.hitsCount += result.data.hits.length;
+    if (this.hitsCount === result.data.totalHits) {
+      Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
+      this.loadMoreButton.classList.remove('visible');
+    } else {
+      this.loadMoreButton.classList.add('visible');
+    }
   }
 
   async getImages() {
@@ -47,21 +64,8 @@ export class Gallery {
     })
   }
 
-  renderResults(result) {
-    if (result.data.totalHits === 0) {
-      Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
-      this.loadMoreButton.classList.remove('visible');
-      return;
-    }
-    this.hitsCount += result.data.hits.length;
-    if (this.hitsCount === result.data.totalHits) {
-      Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
-      this.loadMoreButton.classList.remove('visible');
-    } else {
-      this.loadMoreButton.classList.add('visible');
-    }
-    const galleryItems = result.data.hits;
-    const galleryMarkup = this.createGalleryCardMarkup(galleryItems);
+  renderResults(results) {
+    const galleryMarkup = this.createGalleryCardMarkup(results);
     this.galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
   }
 
